@@ -1,0 +1,12 @@
+{
+  "name": "sk5004-ml-assignments",
+  "private": true,
+  "description": "Skrip pembuat deck presentasi w14 dan w15 (pptxgenjs).",
+  "scripts": {
+    "deck:w14": "node w14-pitching-rbl/build_deck.js w14-pitching-rbl/pitching-rbl-phase-space.pptx",
+    "deck:w15": "node w15-rbl-final/build_deck.js w15-rbl-final/rbl-final-progres.pptx"
+  },
+  "dependencies": {
+    "pptxgenjs": "3.12.0"
+  }
+}

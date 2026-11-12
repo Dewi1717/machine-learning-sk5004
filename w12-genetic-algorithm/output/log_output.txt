@@ -1,0 +1,28 @@
+======================================================================
+CONTOH A: GA encoding real untuk curve fitting y = a x^2 + b x + c
+======================================================================
+ gen         a         b         c   best -MSE     mean -MSE
+   0   -0.5781    1.3047    5.3000    -33.1708       -648.23
+   1    0.8603   -4.7663    3.9168    -25.3403       -305.01
+   2    1.2960    0.0382    0.3218    -14.8557       -149.98
+   5    2.1790   -2.0701   -0.4248     -3.1946        -39.49
+  10    1.9560   -2.7765    0.6692     -0.3115         -2.88
+  20    1.9849   -2.9808    0.9678     -0.1654         -0.87
+  40    1.9818   -2.9510    1.0043     -0.1619         -0.76
+  79    1.9791   -2.9487    1.0080     -0.1619         -1.19
+
+GA            : a=1.9791  b=-2.9487  c=1.0080  MSE=0.1619
+Least squares : a=1.9788  b=-2.9487  c=1.0098  MSE=0.1619
+Nilai asli    : a=2.0000  b=-3.0000  c=1.0000
+
+======================================================================
+CONTOH B: GA encoding permutasi untuk rute 15 toko (TSP)
+======================================================================
+generasi   0: panjang rute terbaik = 30.072
+generasi  10: panjang rute terbaik = 20.869
+generasi  50: panjang rute terbaik = 17.100
+generasi 299: panjang rute terbaik = 17.100
+rute terbaik akhir: 0 -> 2 -> 13 -> 3 -> 5 -> 1 -> 11 -> 10 -> 6 -> 8 -> 14 -> 15 -> 12 -> 9 -> 7 -> 4 -> 0
+pembanding nearest-neighbour + 2-opt: 17.091
+
+Gambar disimpan di %USERPROFILE%\OneDrive - Institut Teknologi Bandung\SK5004 Machine Learning and Artificial Intelligence\w12-genetic-algorithm\output

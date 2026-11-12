@@ -1,0 +1,94 @@
+
+======================================================================
+1. DECISION TREE (criterion='gini', tanpa batas kedalaman)
+======================================================================
+|--- overcast <= 0.50
+|   |--- temperature <= 77.50
+|   |   |--- temperature <= 66.50
+|   |   |   |--- class: No
+|   |   |--- temperature >  66.50
+|   |   |   |--- humidity <= 75.00
+|   |   |   |   |--- class: Yes
+|   |   |   |--- humidity >  75.00
+|   |   |   |   |--- temperature <= 70.50
+|   |   |   |   |   |--- class: Yes
+|   |   |   |   |--- temperature >  70.50
+|   |   |   |   |   |--- class: No
+|   |--- temperature >  77.50
+|   |   |--- class: No
+|--- overcast >  0.50
+|   |--- class: Yes
+
+Akurasi Decision Tree pada data uji: 42.86%
+
+======================================================================
+   Contoh Gini impurity split di root node
+======================================================================
+   overcast     <= 0.5  : kiri 10 (G=0.500), kanan  4 (G=0.000) -> weighted Gini = 0.357
+   sunny        <= 0.5  : kiri  9 (G=0.346), kanan  5 (G=0.480) -> weighted Gini = 0.394
+   temperature  <= 77.5 : kiri 10 (G=0.420), kanan  4 (G=0.500) -> weighted Gini = 0.443
+
+======================================================================
+2. PARAMETER KUNCI DECISION TREE
+======================================================================
+parameter                kedalaman   daun   akurasi uji
+default                          5      6        42.86%
+max_depth=4                      4      5        42.86%
+max_depth=2                      2      3        50.00%
+min_samples_split=5              4      5        42.86%
+min_samples_split=8              3      4        50.00%
+criterion='entropy'              5      6        50.00%
+
+======================================================================
+3. RANDOM FOREST (100 pohon, bootstrap, max_features='sqrt')
+======================================================================
+Akurasi Random Forest pada data uji: 64.29%
+OOB score (akurasi pada data yang tidak terambil bootstrap): 50.00%
+
+Contoh bootstrap sample (indeks data latih) untuk 3 pohon pertama:
+   pohon 1: sampel = [2, 2, 3, 7, 7, 8, 8, 9, 9, 10, 10, 11, 12, 12]  | out-of-bag = [0, 1, 4, 5, 6, 13]
+   pohon 2: sampel = [0, 3, 3, 3, 3, 3, 5, 7, 7, 8, 9, 9, 10, 10]  | out-of-bag = [1, 2, 4, 6, 11, 12, 13]
+   pohon 3: sampel = [0, 2, 3, 4, 5, 5, 6, 7, 7, 8, 8, 9, 10, 12]  | out-of-bag = [1, 11, 13]
+
+Feature importance:
+humidity       0.286
+temperature    0.255
+wind           0.138
+overcast       0.134
+sunny          0.113
+rainy          0.075
+
+======================================================================
+4. VOTING SEMUA POHON
+======================================================================
+   aktual  vote_Yes  vote_No pred_RF pred_DT
+14     No        20       80      No      No
+15    Yes        51       49     Yes      No
+16    Yes        84       16     Yes     Yes
+17     No        68       32     Yes      No
+18     No        21       79      No      No
+19     No        73       27     Yes     Yes
+20    Yes        38       62      No      No
+21    Yes        80       20     Yes     Yes
+22    Yes        61       39     Yes      No
+23    Yes        85       15     Yes     Yes
+24    Yes        67       33     Yes      No
+25    Yes        43       57      No      No
+26     No        88       12     Yes     Yes
+27    Yes        54       46     Yes      No
+
+======================================================================
+5. TREE VS FOREST
+======================================================================
+Decision Tree : 42.86%
+Random Forest : 64.29%
+
+Confusion matrix Decision Tree (baris=aktual, kolom=prediksi) [Yes, No]:
+[[3 6]
+ [2 3]]
+
+Confusion matrix Random Forest (baris=aktual, kolom=prediksi) [Yes, No]:
+[[7 2]
+ [3 2]]
+
+Gambar dan CSV disimpan di: %USERPROFILE%\OneDrive - Institut Teknologi Bandung\SK5004 Machine Learning and Artificial Intelligence\w09-random-forest\output

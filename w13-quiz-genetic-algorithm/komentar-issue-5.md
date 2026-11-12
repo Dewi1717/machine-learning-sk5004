@@ -1,0 +1,2 @@
+Nama: [NAMA LENGKAP]
+NIM: [NIM]

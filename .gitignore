@@ -1,0 +1,29 @@
+# --- Slide kuliah dosen (hak cipta S. Viridi) - tidak diunggah, lihat link OSF di README ---
+w09-random-forest/12_random_forest_intro.pdf
+w10-svm/13_svm_short_intro.pdf
+w11-mindmap-sysdyn-venv/slides/
+w12-genetic-algorithm/17_ga_short_intro.pdf
+
+# --- Data phase space sintetis (22,5 MB) - buat ulang dengan: python w15-rbl-final/code/make_synthetic_phsp.py ---
+w15-rbl-final/data_synthetic/
+*.IAEAphsp
+*.IAEAheader
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# --- Node (pembuat deck) ---
+node_modules/
+package-lock.json
+
+# --- Office / OS ---
+~$*
+*.tmp
+Thumbs.db
+desktop.ini
+.DS_Store

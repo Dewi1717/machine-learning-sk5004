@@ -1,0 +1,91 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Mermaid check</title></head><body>
+<pre class="mermaid">
+mindmap
+  root((Phase space IAEA Clinac 600C 6 MV))
+    ((Data))
+      (Format IAEA phsp)
+        file .IAEAheader
+        file .IAEAphsp biner
+      (Variabel per partikel)
+        jenis partikel: foton / elektron / positron
+        energi kinetik E
+        posisi x, y, z
+        cosinus arah u, v, w
+        bobot statistik
+      (Variasi field size)
+        lapangan kecil
+        lapangan referensi 10x10 cm²
+        lapangan besar
+    ((Kualitas berkas))
+      (Spektrum energi)
+        energi rata-rata
+        pelunakan di luar sumbu
+      (Indeks kualitas)
+        TPR20,10
+        PDD10
+        kedalaman dmax
+      (Profil lateral)
+        flatness
+        symmetry
+        penumbra
+      (Kontaminasi elektron)
+        dosis permukaan
+    ((Dosis serap))
+      (Simulasi Monte Carlo)
+        EGSnrc / DOSXYZnrc
+        Geant4 / GATE / TOPAS
+      (Fantom air)
+      (Kurva PDD dan profil)
+      (Output factor)
+        head scatter Sc
+        phantom scatter Sp
+    ((Machine learning))
+      (Klasifikasi)
+        jenis partikel
+        asal hamburan: primer vs terhambur
+        kelompok field size
+      (Algoritma)
+        Random Forest
+        SVM
+        Naive Bayes
+        KNN
+      (Evaluasi)
+        accuracy, precision, recall, F1
+        feature importance
+    ((Validasi))
+      (Data ukur / commissioning)
+      (Kriteria gamma index)
+      (Protokol IAEA TRS-398 / TRS-483)
+</pre>
+<pre class="mermaid">
+graph TD
+  LINAC["Varian Clinac 600C 6 MV"] -->|menghasilkan| PHSP["Data phase space IAEA"]
+  FS["Variasi field size<br/>(setelan jaw/kolimator)"] -->|mengubah| PHSP
+  PHSP -->|berisi| FEAT["Ciri partikel:<br/>jenis, E, x, y, u, v, bobot"]
+  FS -->|memperbanyak| SCAT["Hamburan kepala linac<br/>& kontaminasi elektron"]
+  SCAT -->|tercermin dalam| FEAT
+  FEAT -->|menjadi input| ML["Klasifikasi ML<br/>(RF, SVM, NB, KNN)"]
+  ML -->|mengelompokkan| CLS["Kelas: field size /<br/>primer vs terhambur /<br/>jenis partikel"]
+  ML -->|memberi| IMP["Feature importance"]
+  IMP -->|menjelaskan| BQ["Kualitas berkas:<br/>spektrum, TPR20,10, PDD10"]
+  PHSP -->|sumber untuk| MC["Simulasi Monte Carlo<br/>di fantom air"]
+  MC -->|menghitung| DOSE["Dosis serap:<br/>PDD, profil, output factor"]
+  FS -->|memengaruhi| DOSE
+  BQ -->|menentukan| DOSE
+  CLS -->|dibandingkan dengan| BQ
+  DOSE -->|divalidasi dengan| VAL["Data ukur / TRS-398 /<br/>gamma index"]
+  BQ -->|divalidasi dengan| VAL
+
+  RQ1(["RQ1"]) -.-> FS
+  RQ1 -.-> BQ
+  RQ2(["RQ2"]) -.-> ML
+  RQ2 -.-> CLS
+  RQ3(["RQ3"]) -.-> IMP
+  RQ3 -.-> DOSE
+</pre>
+
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+mermaid.initialize({startOnLoad:false});
+try{await mermaid.run({querySelector:'.mermaid'});document.title='OK';}catch(e){document.title='ERR '+e.message;}
+</script></body></html>

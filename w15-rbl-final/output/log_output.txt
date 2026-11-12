@@ -1,0 +1,52 @@
+
+==========================================================================
+1. MEMBACA PHASE SPACE dari data_synthetic (DATA SINTETIS)
+==========================================================================
+  SYNTH_Clinac600C_6MV_10x10.IAEAheader: 300,000 partikel, field size 10 cm, 0.12 s
+  SYNTH_Clinac600C_6MV_20x20.IAEAheader: 300,000 partikel, field size 20 cm, 0.10 s
+  SYNTH_Clinac600C_6MV_5x5.IAEAheader: 300,000 partikel, field size 5 cm, 0.19 s
+
+==========================================================================
+2. INDIKATOR KUALITAS BERKAS PER FIELD SIZE (DATA SINTETIS)
+==========================================================================
+ field_size_cm  foton_%  elektron_%  positron_%  E_mean_foton_MeV  E_mean_foton_r<1cm  foton_terhambur_%
+         5.000   99.267       0.691       0.043             1.740               1.741              5.195
+        10.000   98.912       1.038       0.050             1.685               1.717              6.213
+        20.000   98.078       1.812       0.111             1.577               1.682              7.908
+
+==========================================================================
+3. KLASIFIKASI FIELD SIZE PER PARTIKEL (10-fold stratified CV) (DATA SINTETIS)
+==========================================================================
+model  accuracy  macro_F1  waktu_s
+   RF    0.7593    0.7576  15.2578
+  SVM    0.7689    0.7672  88.9489
+   NB    0.7522    0.7503   0.5093
+  KNN    0.7589    0.7579   1.4981
+
+Confusion matrix SVM (baris = aktual, kolom = prediksi) ['5', '10', '20']:
+[[4743  251    6]
+ [1563 3272  165]
+ [ 405 1076 3519]]
+
+Feature importance (RF):
+r                      0.488
+theta_deg              0.361
+E                      0.119
+radial_mismatch_deg    0.031
+type                   0.001
+
+Recall per kelas (SVM) untuk partikel dekat sumbu (r < 0.75 cm, di dalam proyeksi lapangan terkecil):
+     5 cm: recall = 0.994  (n=3759)
+    10 cm: recall = 0.002  (n=1058)
+    20 cm: recall = 0.000  (n=256)
+   -> dekat sumbu, partikel dari lapangan berbeda hampir identik; model cenderung menebak lapangan terkecil karena kerapatan partikelnya paling tinggi.
+
+==========================================================================
+4. KLASIFIKASI PER KELOMPOK 500 PARTIKEL (fitur histogram) (DATA SINTETIS)
+==========================================================================
+600 kelompok, RF accuracy = 1.0000
+[[200   0   0]
+ [  0 200   0]
+ [  0   0 200]]
+
+Output di %USERPROFILE%\OneDrive - Institut Teknologi Bandung\SK5004 Machine Learning and Artificial Intelligence\w15-rbl-final\output
